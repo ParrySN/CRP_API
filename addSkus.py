@@ -1,19 +1,23 @@
 import db
 import json
 
-with open('SKUs.json', 'r') as file:
-    skus = json.load(file)
+with open('PC.json', 'r') as file:
+    data = json.load(file)
     
 cur = db.connectDB()
 record = 0
-doc_ref = cur.collection("skus")
-for sku in skus:
+doc_ref = cur.collection("users")
+for d in data:
+    doc_ref.document(d['Code']).set(d)
     record += 1
     print(record)
-    doc_ref.add(sku)
+    
+    # doc_ref.add(data)
 
-# users_ref = cur.collection("skus")
-# docs = users_ref.stream()
+users_ref = cur.collection("users")
+doc = users_ref.document("54801").get()
 
+# print(docs.get())
+print(f"{doc.id} => {doc.to_dict()}")
 # for doc in docs:
-#     print(f"{doc.id} => {doc.to_dict()}")
+

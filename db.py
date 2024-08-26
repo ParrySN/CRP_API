@@ -6,7 +6,9 @@ from firebase_admin import firestore
 def connectDB():
     cred = credentials.Certificate('./serviceAccount.json')
 
-    firebase_admin.initialize_app(cred)
+    if not firebase_admin._apps:
+        firebase_admin.initialize_app(cred)
+
     db = firestore.client()
     return db
 

@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Register Blueprints
 app.register_blueprint(orders_bp, url_prefix='/')
 app.register_blueprint(products_bp, url_prefix='/')
-app.register_blueprint(users_bp, url_prefix='/')
+# app.register_blueprint(users_bp, url_prefix='/')
 # app.register_blueprint(products_bp, url_prefix='/api')
 
 if __name__ == '__main__':

@@ -1,15 +1,18 @@
 from flask import jsonify
+from orders import submitOrder
+from orders import updateOrder
 import db
+
+cur = db.connectDB()
+orders = cur.collection("orders")
 
 def create_order(order_data):
     # global order_id_counter
-    cur = db.connectDB()
-    orders = cur.collection("orders")
+    try:
+        order_data['order']
+        return updateOrder.update_order(order_data)
+    except :
+        return submitOrder.submit_order(order_data)
     
-    if not order_data:
-        return jsonify({"error": "Invalid data"}), 400
-    orders.add(order_data)
-    # Return a response with the new order ID
-    return jsonify({"message": "Order created successfully"}), 201
-
+    
 
