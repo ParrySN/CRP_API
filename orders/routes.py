@@ -1,5 +1,6 @@
 from orders import createOrder
 from orders import getOrder
+from orders import updateStatus
 from flask import request, Blueprint
 import db
 
@@ -13,4 +14,10 @@ def CreateOrder():
 @orders_bp.route('/orders/', methods=['GET'])
 def GetOrder():
     order_data = request.json  # Get the JSON data from the request body
-    return getOrder.get_order(order_data)
+    return getOrder.get_create_order_data(order_data)
+
+@orders_bp.route('/orders/<status>', methods=['POST'])
+def UpdateStatus(status):
+    order_data = request.json  # Get the JSON data from the request body
+    return updateStatus.update_status(order_data,status)
+

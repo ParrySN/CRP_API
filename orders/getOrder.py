@@ -19,12 +19,4 @@ def get_order(data):
         else:
             return jsonify({'error': 'Order not found'}), 404
     
-    # print(id)  
 
-# order ={
-#     "barcode": "14902430735022",
-#     "branch" : "000",
-#     "status" : "init"
-# }
-
-# get_order(order)

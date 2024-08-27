@@ -12,27 +12,11 @@ doc_ref = cur.collection("skus")
 def get_products(branch,barcode):
     # Find the product with the given ID
     documents = doc_ref.where(filter=FieldFilter('barcodes', 'array_contains', barcode)).stream()
-    if documents :
-        product=[]
-        for skus in documents:
-            sku = skus.to_dict()
-            product.append({"sku_id":skus.id}) 
-            for p in sku['goods']:
-                r = {
-                    'name' : sku['name'],
-                    'bnd': sku['bnd'], 
-                    'cat': sku['cat'], 
-                    'img': sku['img'], 
-                    'code': p['code'], 
-                    'utqQty': p['utqQty'], 
-                    'utqName': p['utqName'], 
-                    'price8': p['price8'], 
-                    'price0': p['price0'],
-                }
-                product.append(r)
-            # products = json.dumps(product, ensure_ascii=False, indent=2)
-            order = getOrder.get_order({"skuId": skus.id,"branch" : branch,})
-    output = json.dumps({"product":product,"order": order},ensure_ascii=False, indent=2)
+    for skus in documents:
+        product = skus.to_dict()
+    product["id"] = skus.id
+    order = getOrder.get_order({"skuId": skus.id,"branch" : branch,})
+    output = json.dumps({"sku":product,"order": order},ensure_ascii=False, indent=2)
     if product:
         return jsonify(output), 200
     else:
